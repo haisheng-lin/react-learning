@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import './assets/styles/global.css';
+
+import Game from './components/game.jsx';
+
 class App extends React.Component {
-  handleClick () {
-    console.log('hehe');
-  }
+
   render () {
     return (
-      <h1 onClick={this.handleClick}>Hello React!</h1>
+      <Game />
     );
   }
 }

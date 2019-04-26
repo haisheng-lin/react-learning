@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import '../assets/styles/square.less'
+
 interface SquareProps {
   value: string;
   onClick: () => void;

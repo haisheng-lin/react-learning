@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-import './assets/styles/global.css';
+import './assets/styles/global.less';
 
 import Game from './components/game';
 import About from './components/about';

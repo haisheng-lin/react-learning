@@ -1,9 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 
 import './assets/styles/global.css';
 
-import Game from './components/game.jsx';
+import Game from './components/game';
 
 class App extends React.Component {
 

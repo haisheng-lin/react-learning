@@ -10,6 +10,10 @@ import About from './components/about';
 class App extends React.Component {
 
   render () {
+    const aboutRoute = {
+      pathname: '/about',
+      query: 'my-query',
+    };
     return (
       <Router>
         <div>
@@ -19,7 +23,7 @@ class App extends React.Component {
                 <Link to="/">Game</Link>
               </li>
               <li>
-                <Link to="/about">About</Link>
+                <Link to={ aboutRoute }>About</Link>
               </li>
             </ul>
           </nav>

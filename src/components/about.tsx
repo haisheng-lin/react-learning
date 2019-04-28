@@ -20,25 +20,27 @@ class About extends React.Component<{ location: { pathname: string, query: strin
     };
   }
 
+  renderListItem () {
+    return this.state.list.map(item => (
+      <li key={ item.key }>{ item.val }</li>
+    ));
+  }
+
   componentDidMount () {
     console.log(this.props);
   }
 
   render () {
     return (
-      <div>
+      <React.Fragment>
         <h4>This is About component.</h4>
         <p>以下是列表的循环渲染</p>
         <ul>
-          {
-            this.state.list.map((item) => (
-              <li key={ item.key }>{ item.val }</li>
-            ))
-          }
+          { this.renderListItem() }
         </ul>
         <p>以下是条件渲染，我使用的是内联式 if 写法</p>
         { this.state.randomBoolFlag && (<span>你可能会看到我（如果 randomBoolFlag 为真）</span>) }
-      </div>
+      </React.Fragment>
     );
   }
 }

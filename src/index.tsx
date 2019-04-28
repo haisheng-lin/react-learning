@@ -17,22 +17,18 @@ class App extends React.Component {
     return (
       <Router>
         <React.Suspense fallback={<div>Loading...</div>}>
-          <div>
-            <nav>
-              <ul>
-                <li>
-                  <Link to="/">Game</Link>
-                </li>
-                <li>
-                  <Link to={ aboutRoute }>About</Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-          <div>
-            <Route exact path="/" component={ Game } />
-            <Route path="/about" component={ About } />
-          </div>
+          <nav>
+            <ul>
+              <li>
+                <Link to="/">Game</Link>
+              </li>
+              <li>
+                <Link to={ aboutRoute }>About</Link>
+              </li>
+            </ul>
+          </nav>
+          <Route exact path="/" component={ Game } />
+          <Route path="/about" component={ About } />
         </React.Suspense>
       </Router>
     );

@@ -51,6 +51,43 @@ React 中数据流是单向的
 }
 ```
 
+#### 修饰组件样式
+
+第一种是通过 style 编写内联样式，但是这么写我个人不太喜欢，也不太好维护：
+```
+<div style={{ background: green }}>test</div>
+```
+
+第二种是编写样式文件，在组件文件导入进来，注意 jsx 中赋值类不是通过 `class=xxx` 而是 `className=xxx`：
+```
+// 这是组件文件 square.tsx
+import '../assets/styles/square.less';
+
+render () {
+  return (
+    <div className='your-class'></div>
+  );
+}
+```
+
+#### 组件最外层的 div
+
+就像 Vue 一样，React 的组件最外层需要一个 `div` 标签包裹起来，不允许最外层有两个或以上同级的元素。例如：
+```
+<div>
+  <div>test</div>
+  <span>test</span>
+</div>
+```
+
+但是如果我们希望渲染的时候，只显示组件真正的模板，不要最外层的 `div`，那可以把最外层的 `div` 替换为 `React.Fragment`：
+```
+<React.Fragment>
+  <div>test</div>
+  <span>test</span>
+</React.Fragment>
+```
+
 ### React-Router
 
 #### 路由传参

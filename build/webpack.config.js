@@ -12,6 +12,10 @@ const config = {
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
     extensions: ['.ts', '.tsx', '.js', '.json'],
+    // 简化 import 路径，使用的时候是 import xxx from '@/xxx'，css 则是 'import ~@/xxx'
+    alias: {
+      '@': path.resolve(__dirname, '../src'),
+    },
   },
   module: {
     rules: [

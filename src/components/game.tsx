@@ -1,7 +1,12 @@
 import * as React from 'react';
 import Board from './board';
 
-class Game extends React.Component {
+class Game extends React.Component<{ location: { query: string } }> {
+
+  componentDidMount () {
+    console.log(this.props.location.query);
+  }
+
   render () {
     return (
       <div className="game">

@@ -135,3 +135,48 @@ this.props.location.query // oops!
 
 - 优点：优雅，可传对象
 - 缺点：刷新页面，参数丢失
+
+
+3. 通过 js 实现的路由跳转如何传递参数？
+
+看下文。
+
+#### 通过 js 跳转路由
+
+第一步，从 `react-router-dom` 导入 `withRouter` 方法：
+```
+import { withRouter } from 'react-router-dom';
+```
+
+第二步，使用 `withRouter` 方法加工需要触发路由跳转的组件（具体可看 `header.tsx`）：
+```
+export default withRouter(Header);
+```
+
+第三步，通过 `this.props.history.push` 实现路由跳转，也可以写成一个函数：
+```
+<span onClick={ () => this.props.history.push('/') }>Game</span>
+```
+
+如何传参？改成：
+```
+toGamePage () {
+  this.props.history.push({
+    pathname: '/',
+    query: 'my-query',
+  });
+}
+
+...
+
+<span onClick={ () => this.toGamePage() }>Game</span>
+```
+
+参数获取：
+```
+this.props.location.query // my-query
+```
+
+#### 路由守卫
+
+待学

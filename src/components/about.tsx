@@ -27,7 +27,7 @@ class About extends React.Component<{ location: { pathname: string, query: strin
   }
 
   componentDidMount () {
-    console.log(this.props);
+    console.log(this.props.location.query);
   }
 
   render () {

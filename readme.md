@@ -1,6 +1,8 @@
-### React 学习笔记
+## React 学习笔记
 
 React 组件的 state 基本等同于 Vue 组件的 data, React 通过 `setState` 方法更改数据，Vue 则是通过 `this.xxx = xxx` 更改
+
+### React 本身
 
 #### 生命周期
 
@@ -28,7 +30,28 @@ React 组件的 state 基本等同于 Vue 组件的 data, React 通过 `setState
 React 中数据流是单向的
 
 - 父组件向子组件通过 props 传递数据
-- 如果子组件向父组件通讯，Vue 可以通过 emit 事件且携带数据，React 还是需要父组件通过 props 传递触发函数，子组件去调用函数来完成
+- 如果子组件向父组件通讯，Vue 可以通过 emit 事件且携带数据，React 还是需要父组件通过 props
+
+#### 条件渲染
+
+内联式 if 的写法可能比较简洁：
+
+```
+{ this.state.randomBoolFlag && (<span>你可能会看到我（如果 randomBoolFlag 为真）</span>) }
+```
+
+#### 循环渲染
+
+这种写法会比较简洁，跟 Vue 一样，需要传入 key 属性：
+```
+{
+  this.state.list.map((item) => (
+    <li key={ item.key }>{ item.val }</li>
+  ))
+}
+```
+
+### React-Router
 
 #### 路由传参
 

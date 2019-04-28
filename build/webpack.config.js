@@ -66,7 +66,7 @@ const config = {
       rewrites: [
         {
           from: /.*/g,
-          to: '/public/index.html',
+          to: '/index.html',
         },
       ],
     },

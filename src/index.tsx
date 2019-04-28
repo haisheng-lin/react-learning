@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import './assets/styles/global.less';
 
-import Game from './components/game';
-import About from './components/about';
+import Game from './components/game'; // 直接加载
+const About = React.lazy(() => import('./components/about')); // 懒加载
 
 class App extends React.Component {
 
@@ -16,22 +16,24 @@ class App extends React.Component {
     };
     return (
       <Router>
-        <div>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Game</Link>
-              </li>
-              <li>
-                <Link to={ aboutRoute }>About</Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-        <div>
-          <Route exact path="/" component={ Game } />
-          <Route path="/about" component={ About } />
-        </div>
+        <React.Suspense fallback={<div>Loading...</div>}>
+          <div>
+            <nav>
+              <ul>
+                <li>
+                  <Link to="/">Game</Link>
+                </li>
+                <li>
+                  <Link to={ aboutRoute }>About</Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div>
+            <Route exact path="/" component={ Game } />
+            <Route path="/about" component={ About } />
+          </div>
+        </React.Suspense>
       </Router>
     );
   }

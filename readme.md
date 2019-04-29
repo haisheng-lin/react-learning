@@ -106,6 +106,17 @@ React 如果想实现 Vue 的 slot 功能，还是通过 props 传递 JSX.Elemen
 
 我觉得这句话（无论中文还是英文）很困惑，因为我看了官网给的例子。实际上它是指一个组件 prop 接收了一个 render 属性（当然不一定非得叫 render），这个属性是一个函数，返回的是 React 元素。那么这个组件渲染时会在合适的位置根据它渲染出 React 元素。要是我理解没错的话，它更像 Vue 里面的 slot 功能（原来我之前学 slot 的时候无意中用到的就是这个技术）。
 
+### 组件调用事件处理函数
+
+官网资料：https://zh-hans.reactjs.org/docs/faq-functions.html
+
+- 在 constructor 中绑定：`this.handleClick = this.handleClick.bind(this)`
+- 在组件定义 `handleClick = () => { xxx }`
+- 在 render 中定义：`<button onClick={ this.handleClick.bind(this) }>Click Me</button>`（在 render 函数执行时会产生一个新的函数，可能影响性能）
+- 在 render 中用箭头函数：`<button onClick={ () => this.handleClick() }>Click Me</button>`（在 render 函数执行时会产生一个新的函数，可能影响性能）
+
+综上，第一种和第二种方法可能比较好。如果要我选的话，我可不太想在 constructor 中绑定，这样会增加代码量，所以我比较喜欢第二种。
+
 ### React-Router
 
 #### 路由传参

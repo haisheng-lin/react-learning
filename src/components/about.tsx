@@ -1,8 +1,11 @@
 import * as React from 'react';
 
+import Desc from './desc';
+
 interface AboutState {
   list: Array<{ key: string, val: number }>;
   randomBoolFlag: boolean;
+  slot: JSX.Element;
 }
 
 class About extends React.Component<{ location: { pathname: string, query: string } }, AboutState> {
@@ -17,6 +20,9 @@ class About extends React.Component<{ location: { pathname: string, query: strin
         { key: 'key3', val: 3 },
       ],
       randomBoolFlag: boolArr[Math.floor(Math.random() * boolArr.length)],
+      slot: (
+        <span>这是 slot 内容</span>
+      ),
     };
   }
 
@@ -40,6 +46,8 @@ class About extends React.Component<{ location: { pathname: string, query: strin
         </ul>
         <p>以下是条件渲染，我使用的是内联式 if 写法</p>
         { this.state.randomBoolFlag && (<span>你可能会看到我（如果 randomBoolFlag 为真）</span>) }
+        <p>以下是 slot 用法：</p>
+        <Desc slot={ this.state.slot }></Desc>
       </React.Fragment>
     );
   }

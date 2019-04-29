@@ -70,6 +70,10 @@ render () {
 }
 ```
 
+#### slot
+
+React 如果想实现 Vue 的 slot 功能，还是通过 props 传递 JSX.Element
+
 #### 组件最外层的 div
 
 就像 Vue 一样，React 的组件最外层需要一个 `div` 标签包裹起来，不允许最外层有两个或以上同级的元素。例如：
@@ -179,4 +183,4 @@ this.props.location.query // my-query
 
 #### 路由守卫
 
-待学
+已经实现了 RouterGuard，只需要再加一个守卫函数即可。

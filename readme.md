@@ -72,7 +72,15 @@ render () {
 
 #### slot
 
-React 如果想实现 Vue 的 slot 功能，还是通过 props 传递 JSX.Element
+React 如果想实现 Vue 的 slot 功能，还是通过 props 传递 JSX.Element。它很容易就实现了等同于 Vue 的多 slot 功能：
+```
+// props 接收不同的属性，在不同的位置渲染出不同的 slot
+<div>
+  { this.props.renderHeader() }
+  <p>This is your body element</p>
+  { this.props.renderFooter() }
+</div>
+```
 
 #### 组件最外层的 div
 
@@ -91,6 +99,12 @@ React 如果想实现 Vue 的 slot 功能，还是通过 props 传递 JSX.Elemen
   <span>test</span>
 </React.Fragment>
 ```
+
+### render prop
+
+> 具有 render prop 的组件接受一个函数，该函数返回一个 React 元素并调用它而不是实现自己的渲染逻辑
+
+我觉得这句话（无论中文还是英文）很困惑，因为我看了官网给的例子。实际上它是指一个组件 prop 接收了一个 render 属性（当然不一定非得叫 render），这个属性是一个函数，返回的是 React 元素。那么这个组件渲染时会在合适的位置根据它渲染出 React 元素。要是我理解没错的话，它更像 Vue 里面的 slot 功能（原来我之前学 slot 的时候无意中用到的就是这个技术）。
 
 ### React-Router
 

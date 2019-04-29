@@ -6,6 +6,7 @@ interface AboutState {
   list: Array<{ key: string, val: number }>;
   randomBoolFlag: boolean;
   slot: JSX.Element;
+  value: string;
 }
 
 class About extends React.Component<{ location: { pathname: string, query: string } }, AboutState> {
@@ -23,6 +24,7 @@ class About extends React.Component<{ location: { pathname: string, query: strin
       slot: (
         <span>这是 slot 内容</span>
       ),
+      value: '',
     };
   }
 
@@ -32,8 +34,13 @@ class About extends React.Component<{ location: { pathname: string, query: strin
     ));
   }
 
-  componentDidMount () {
-    console.log(this.props.location.query);
+  handleInputChnage (e: any) {
+    this.setState({ value: e.target.value });
+  }
+
+  handleFormSubmit (e: any) {
+    e.preventDefault();
+    console.log(this.state.value);
   }
 
   render () {
@@ -48,6 +55,12 @@ class About extends React.Component<{ location: { pathname: string, query: strin
         { this.state.randomBoolFlag && (<span>你可能会看到我（如果 randomBoolFlag 为真）</span>) }
         <p>以下是 slot 用法：</p>
         <Desc slot={ this.state.slot }></Desc>
+        <p>以下是表单</p>
+        <form onSubmit={ (e) => this.handleFormSubmit(e) }>
+          <label htmlFor="value">Name:</label>
+          <input name="value" type="text" value={ this.state.value } onChange={ (e) => this.handleInputChnage(e) } />
+          <input type="submit" value="Submit" />
+        </form>
       </React.Fragment>
     );
   }

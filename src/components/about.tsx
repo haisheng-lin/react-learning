@@ -2,11 +2,14 @@ import * as React from 'react';
 
 import Desc from './desc';
 
+import { getWeatherByCity } from '@/api/weather';
+
 interface AboutState {
   list: Array<{ key: string, val: number }>;
   randomBoolFlag: boolean;
   slot: JSX.Element;
-  value: string;
+  city: string;
+  weatherData: any;
 }
 
 class About extends React.Component<{ location: { pathname: string, query: string } }, AboutState> {
@@ -24,7 +27,8 @@ class About extends React.Component<{ location: { pathname: string, query: strin
       slot: (
         <span>这是 slot 内容</span>
       ),
-      value: '',
+      city: '',
+      weatherData: null,
     };
   }
 
@@ -35,32 +39,84 @@ class About extends React.Component<{ location: { pathname: string, query: strin
   }
 
   handleInputChnage (e: any) {
-    this.setState({ value: e.target.value });
+    this.setState({ city: e.target.value });
   }
 
   handleFormSubmit (e: any) {
     e.preventDefault();
-    console.log(this.state.value);
+    this.getWeather(this.state.city);
+  }
+
+  getWeather (city: string) {
+    getWeatherByCity(city)
+      .then(data => {
+        this.setState({ weatherData: data })
+      })
+      .catch(err => {
+        console.error(err);
+      })
+  }
+
+  renderWeatherForcast (data: any) {
+    const weatherForcastTable = (
+      <React.Fragment>
+        <p>{ data.city }</p>
+        <table>
+          <thead>
+            <tr>
+              <th>日期</th>
+              <th>风力</th>
+              <th>风向</th>
+              <th>最高温</th>
+              <th>最低温</th>
+              <th>天气</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            {
+              data.forecast.map((item: any) => (
+                <React.Fragment key={ item.date }>
+                  <tr>
+                    <td>{ item.date }</td>
+                    <td>{ item.fengli }</td>
+                    <td>{ item.fengxiang }</td>
+                    <td>{ item.high }</td>
+                    <td>{ item.low }</td>
+                    <td>{ item.type }</td>
+                  </tr>
+                </React.Fragment>
+              ))
+            }
+          </tbody>
+        </table>
+      </React.Fragment>
+    );
+    return weatherForcastTable;
   }
 
   render () {
     return (
       <React.Fragment>
-        <h4>This is About component.</h4>
-        <p>以下是列表的循环渲染</p>
+        <h3>This is About component.</h3>
+        <h4>以下是列表的循环渲染</h4>
         <ul>
           { this.renderListItem() }
         </ul>
-        <p>以下是条件渲染，我使用的是内联式 if 写法</p>
+        <h4>以下是条件渲染，我使用的是内联式 if 写法</h4>
         { this.state.randomBoolFlag && (<span>你可能会看到我（如果 randomBoolFlag 为真）</span>) }
-        <p>以下是 slot 用法：</p>
+        <h4>以下是 slot 用法：</h4>
         <Desc slot={ this.state.slot }></Desc>
-        <p>以下是表单</p>
+        <h4>以下是表单</h4>
         <form onSubmit={ (e) => this.handleFormSubmit(e) }>
-          <label htmlFor="value">Name:</label>
-          <input name="value" type="text" value={ this.state.value } onChange={ (e) => this.handleInputChnage(e) } />
-          <input type="submit" value="Submit" />
+          <label htmlFor="city">城市:</label>
+          <input name="city" type="text" value={ this.state.city } onChange={ (e) => this.handleInputChnage(e) } />
+          <input type="submit" value="查询" />
         </form>
+        <h4>以下是调用接口例子</h4>
+        {
+          this.state.weatherData && this.renderWeatherForcast(this.state.weatherData)
+        }
       </React.Fragment>
     );
   }

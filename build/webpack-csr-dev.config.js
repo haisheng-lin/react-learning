@@ -30,10 +30,7 @@ const config = {
       },
       {
         test: /\.ts$/,
-        loader:[
-          // 'babel-loader',
-          'ts-loader',
-        ],
+        loader: 'ts-loader',
         include: path.resolve(__dirname, '../src'),
         exclude: [
           path.join(__dirname, '../node_modules'),

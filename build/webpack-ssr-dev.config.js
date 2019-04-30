@@ -1,11 +1,15 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
-  target: 'web',
-  entry: path.join(__dirname, '../src/index.tsx'),
+  target: 'node',
+  entry: {
+    app: path.join(__dirname, '../src/ssr/server-entry.tsx'),
+  },
   output: {
-    filename: 'bundle.[hash:8].js',
+    filename: 'server-entry.js',
+    path: path.join(__dirname, '../dist'),
+    publicPath: '/public',
+    libraryTarget: 'commonjs2',
   },
   // Enable sourcemaps for debugging webpack's output.
   devtool: 'source-map',
@@ -22,11 +26,25 @@ const config = {
       {
         test: /\.tsx$/,
         loader: 'awesome-typescript-loader',
+        include: path.resolve(__dirname, '../src'),
+      },
+      {
+        test: /\.ts$/,
+        loader:[
+          // 'babel-loader',
+          'ts-loader',
+        ],
+        include: path.resolve(__dirname, '../src'),
+        exclude: [
+          path.join(__dirname, '../node_modules'),
+        ],
       },
       {
         test: /\.js$/,
-        loader: 'source-map-loader',
-        enforce: 'pre',
+        loader: 'babel-loader',
+        exclude: [
+          path.join(__dirname, '../node_modules'),
+        ],
       },
       {
         test: /\.jsx$/,
@@ -77,19 +95,6 @@ const config = {
     hot: true, // 只重加载改动的组件
     // open: true, // 每次都会自动打开页面
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, '../public/index.html'),
-    }),
-  ],
-  // When importing a module whose path matches one of the following, just
-  // assume a corresponding global variable exists and use that instead.
-  // This is important because it allows us to avoid bundling all of our
-  // dependencies, which allows browsers to cache those libraries between builds.
-  // externals: {
-  //   'react': 'React',
-  //   'react-dom': 'ReactDOM',
-  // },
 };
 
 module.exports = config;

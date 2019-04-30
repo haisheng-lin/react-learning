@@ -210,6 +210,10 @@ this.props.location.query // my-query
 
 已经实现了 RouterGuard，只需要再加一个守卫函数即可。
 
+#### Webpack publicPath 与 react-router
+
+如果设置了 publicPath 例如 '/public'，那么输入地址 `localhost:8000/public` 是无法匹配路由的。解决办法是在 `Router` 组件传入一个 `basename` 属性，填上与 publicPath 相对应的值即可（但是我觉得这样还是有耦合）。
+
 ### Redux
 
 就像 Vue 一样，React 本身没有状态管理功能，所以需要其他状态管理库来完成。Redux 就是其中一款实现了 Flux 的库。

@@ -3,14 +3,7 @@ import * as ReactDOM from 'react-dom';
 
 import './assets/styles/global.less';
 
-import createRouter from './router';
-
-class App extends React.Component {
-
-  render () {
-    return createRouter();
-  }
-}
+import App from './app';
 
 ReactDOM.render(
   <App />,

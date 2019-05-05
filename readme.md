@@ -117,6 +117,26 @@ React 如果想实现 Vue 的 slot 功能，还是通过 props 传递 JSX.Elemen
 
 综上，第一种和第二种方法可能比较好。如果要我选的话，我可不太想在 constructor 中绑定，这样会增加代码量，所以我比较喜欢第二种。
 
+### 何时会触发 render
+
+- 初始化：组件被挂载的时候
+- 执行 `setState` 的时候，不论 state 是否发生改变，该组件都重新渲染
+- 父组件重新渲染了，子组件就会重新渲染
+
+但是需要注意的是，以上情况不是绝对的，因为我们可以通过 `shouldComponentUpdate` 控制组件是否需要重新渲染。根据 [React 官网教程](https://react.docschina.org/docs/optimizing-performance.html)：
+```
+shouldComponentUpdate (nextProps, nextState) {
+  if (this.props.color !== nextProps.color) {
+    return true;
+  }
+  if (this.state.count !== nextState.count) {
+    return true;
+  }
+  return false;
+}
+```
+`shouldComponentUpdate` 可以获取到最新的 props 以及 state，我们可以定制某些状态更改时才重新渲染组件的方案，而不必每次 props, state 更改都重新渲染，造成性能损耗。以上的例子是想让组件只在 props.color 或者 state.count 的值变化时重新渲染。
+
 ### React-Router
 
 #### 路由传参
@@ -234,3 +254,25 @@ this.props.location.query // my-query
 - 每个 reducer 都会监听 action，如果 action 的 type 与自己监听的 type 一致，那么将会返回新的数据状态，所以在 `surveyReducer` 中数据变成了 `action.payload`，否则还是返回原来的数据。当然，这里的逻辑都是我写的，也可以返回其他东西
 - 所有 reducer 都由一个总的 `combineReducers` 管理，所有 reducer 的响应都交给 `combineReducer`，存放在一个对象中
 - `SurveyList` 通过 `mapStateToProps` 从第三步中说的对象获取数据，map 到自己的 props，那么就拿到新的状态了
+
+### mobx
+
+除了 redux 外，mobx 也是一款状态管理库。相比 redux，mobx 需要写的代码更简洁，学习成本低一些，不过有可能会出现不规范的问题。你只需要安装 mobx, mobx-react 这两个库。如果你还想用装饰器语法，那么按照以下配置：
+
+安装 babel-plugin-transform-decorators-legacy, babel-preset-stage-1 这两个库，然后在 `.babelrc` 里：
+```
+// .babelrc
+{
+  "presets": [
+    "stage-1",
+    "react",
+    "env"
+  ],
+  "plugins": [
+    // 必须放第一位
+    "transform-decorators-legacy"
+  ]
+}
+```
+
+为什么说可能不规范？因为实际上你也可以通过直接修改 state 达到目的，而不是通过 action。redux 虽然流程繁琐，但是规范，对团队协作起了很好的作用。

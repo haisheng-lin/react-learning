@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { observer, inject } from 'mobx-react';
 
 import Desc from './desc';
 
@@ -12,7 +13,9 @@ interface AboutState {
   weatherData: any;
 }
 
-class About extends React.Component<{ location: { pathname: string, query: string } }, AboutState> {
+// provider 属性名叫什么，这里 inject 就叫什么
+@inject('appState') @observer
+class About extends React.Component<{ location: { pathname: string, query: string }, appState: any }, AboutState> {
   
   constructor (props: any) {
     super(props);
@@ -57,6 +60,15 @@ class About extends React.Component<{ location: { pathname: string, query: strin
       })
   }
 
+  extractWindPower (windPowerString: string): string {
+    const reg = /\[CDATA\[(.*)\]\]/;
+    const arr = reg.exec(windPowerString);
+    if (arr && arr.length === 2) {
+      return arr[1];
+    }
+    return '';
+  }
+
   renderWeatherForcast (data: any) {
     const weatherForcastTable = (
       <React.Fragment>
@@ -73,13 +85,12 @@ class About extends React.Component<{ location: { pathname: string, query: strin
             </tr>
           </thead>
           <tbody>
-
             {
               data.forecast.map((item: any) => (
                 <React.Fragment key={ item.date }>
                   <tr>
                     <td>{ item.date }</td>
-                    <td>{ item.fengli }</td>
+                    <td>{ this.extractWindPower(item.fengli) }</td>
                     <td>{ item.fengxiang }</td>
                     <td>{ item.high }</td>
                     <td>{ item.low }</td>
@@ -93,6 +104,10 @@ class About extends React.Component<{ location: { pathname: string, query: strin
       </React.Fragment>
     );
     return weatherForcastTable;
+  }
+
+  changeMobxState = () => {
+    this.props.appState.changeName('updated-name');
   }
 
   render () {
@@ -117,6 +132,9 @@ class About extends React.Component<{ location: { pathname: string, query: strin
         {
           this.state.weatherData && this.renderWeatherForcast(this.state.weatherData)
         }
+        <h4>以下是 mobx 用法</h4>
+        <p>获取 store 状态：{ this.props.appState.msg }</p>
+        <button onClick={ this.changeMobxState }>点击修改状态</button>
       </React.Fragment>
     );
   }

@@ -1,4 +1,12 @@
 // .babelrc
 {
-  "presets": ["react", "env"]
+  "presets": [
+    "stage-1",
+    "react",
+    "env"
+  ],
+  "plugins": [
+    // 必须放第一位
+    "transform-decorators-legacy"
+  ]
 }

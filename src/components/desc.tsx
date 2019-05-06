@@ -10,6 +10,7 @@ class Desc extends React.Component<DescProps> {
     return (
       <div>
         { this.props.slot }
+        { this.props.children }
       </div>
     );
   }

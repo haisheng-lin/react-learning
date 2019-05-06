@@ -2,6 +2,7 @@ import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 
 import Desc from './desc';
+import Hook from './hook';
 
 import { getWeatherByCity } from '@/api/weather';
 
@@ -28,7 +29,7 @@ class About extends React.Component<{ location: { pathname: string, query: strin
       ],
       randomBoolFlag: boolArr[Math.floor(Math.random() * boolArr.length)],
       slot: (
-        <span>这是 slot 内容</span>
+        <p>这是 slot 内容</p>
       ),
       city: '',
       weatherData: null,
@@ -121,7 +122,9 @@ class About extends React.Component<{ location: { pathname: string, query: strin
         <h4>以下是条件渲染，我使用的是内联式 if 写法</h4>
         { this.state.randomBoolFlag && (<span>你可能会看到我（如果 randomBoolFlag 为真）</span>) }
         <h4>以下是 slot 用法：</h4>
-        <Desc slot={ this.state.slot }></Desc>
+        <Desc slot={ this.state.slot }>
+          <p>这是我的 slot 内容 A</p>
+        </Desc>
         <h4>以下是表单</h4>
         <form onSubmit={ (e) => this.handleFormSubmit(e) }>
           <label htmlFor="city">城市:</label>
@@ -135,6 +138,8 @@ class About extends React.Component<{ location: { pathname: string, query: strin
         <h4>以下是 mobx 用法</h4>
         <p>获取 store 状态：{ this.props.appState.msg }</p>
         <button onClick={ this.changeMobxState }>点击修改状态</button>
+        <h4>以下是 hook</h4>
+        <Hook />
       </React.Fragment>
     );
   }

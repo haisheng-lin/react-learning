@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 
 import Desc from './desc';
 import Hook from './hook';
+import FunctionalComponent from './functional-component';
 
 import { getWeatherByCity } from '@/api/weather';
 
@@ -140,6 +141,8 @@ class About extends React.Component<{ location: { pathname: string, query: strin
         <button onClick={ this.changeMobxState }>点击修改状态</button>
         <h4>以下是 hook</h4>
         <Hook />
+        <h4>测试函数组件</h4>
+        <FunctionalComponent name={ this.state.city } />
       </React.Fragment>
     );
   }

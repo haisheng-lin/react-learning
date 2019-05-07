@@ -134,6 +134,8 @@ shouldComponentUpdate (nextProps, nextState) {
 ```
 `shouldComponentUpdate` 可以获取到最新的 props 以及 state，我们可以定制某些状态更改时才重新渲染组件的方案，而不必每次 props, state 更改都重新渲染，造成性能损耗。以上的例子是想让组件只在 props.color 或者 state.count 的值变化时重新渲染。
 
+Functional Component 如果 props 改变了，会重新渲染，但是无法像 Class Component 那样通过判断能避免重新渲染。
+
 ### Functional && Class Component
 
 Functional component:

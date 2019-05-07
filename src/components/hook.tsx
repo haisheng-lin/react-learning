@@ -1,8 +1,11 @@
 import * as React from 'react';
-import { useState, Fragment } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 
 function Hook () {
   const [ count, setCount ] = useState(1);
+  useEffect(() => {
+    console.log('useEffect invoked');
+  }, [count]);
   return (
     <Fragment>
       <h4>这是 State Hook</h4>
